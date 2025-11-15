@@ -1,140 +1,194 @@
 <!DOCTYPE html>
 <html lang="no">
+
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>WBS – Fleksibelt</title>
-<style>
-  :root {
-    --bg:#f5f6f8;
-    --panel:#ffffff;
-    --ink:#1e293b;
-    --muted:#6b7280;
-    --accent:#3b82f6;
-    --ok:#10b981;
-    --warn:#f59e0b;
-    --line:#d1d5db;
-  }
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>WBS – Fleksibelt</title>
+  <style>
+    :root {
+      --bg: #f5f6f8;
+      --panel: #ffffff;
+      --ink: #1e293b;
+      --muted: #6b7280;
+      --accent: #3b82f6;
+      --ok: #10b981;
+      --warn: #f59e0b;
+      --line: #d1d5db;
+    }
 
-  html,body{height:100%}
-  body{
-    margin:0;
-    background:var(--bg);
-    color:var(--ink);
-    font:500 14px/1.4 'Inter',system-ui,sans-serif;
-  }
+    html,
+    body {
+      height: 100%
+    }
 
-  header{
-    position:sticky;
-    top:0;
-    z-index:5;
-    background:rgba(255,255,255,.9);
-    border-bottom:1px solid var(--line);
-    backdrop-filter:blur(6px);
-  }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font: 500 14px/1.4 'Inter', system-ui, sans-serif;
+    }
 
-  header .wrap{
-    max-width:1280px;
-    margin:0 auto;
-    padding:14px 20px;
-    display:flex;
-    gap:12px;
-    align-items:baseline;
-  }
+    header {
+      top: 0;
+      z-index: 5;
+      background: rgba(255, 255, 255, .9);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(6px);
+    }
 
-  h1{font-size:18px;margin:0;color:var(--ink)}
-  .hint{color:var(--muted);font-weight:500}
+    header .wrap {
+      max-width: none;
+      margin: 0 auto;
+      padding: 14px 20px;
+      display: flex;
+      gap: 12px;
+      align-items: baseline;
+    }
 
-  .board{max-width:1280px;margin:18px auto 40px;padding:8px 16px}
+    h1 {
+      font-size: 18px;
+      margin: 0;
+      color: var(--ink)
+    }
 
-  .tree{display:flex;gap:20px;overflow:auto;padding-bottom:24px}
-  .l1{min-width:320px}
+    .hint {
+      color: var(--muted);
+      font-weight: 500
+    }
 
-  .card{
-    background:var(--panel);
-    border:1px solid var(--line);
-    border-radius:12px;
-    padding:10px 10px 6px;
-    box-shadow:0 2px 4px rgba(0,0,0,.05);
-  }
+    .board {
+      max-width: none;
+      margin: 18px auto 40px;
+      padding: 8px 16px
+    }
 
-  .title{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:8px;
-    padding:6px 8px;
-    margin:-4px -4px 8px;
-    border-radius:10px;
-    background:rgba(59,130,246,.08);
-    color:var(--ink);
-  }
+    .tree {
+      display: flex;
+      gap: 20px;
+      overflow: auto;
+      padding-bottom: 24px
+    }
 
-.title small{
-  font-weight:700;
-  color:#fff;
-  background:var(--accent);
-  padding:2px 8px;
-  border-radius:999px;
-}
+    .l1 {
+      min-width: 320px
+    }
 
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 10px 10px 6px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, .05);
+    }
 
-  ul{list-style:none;margin:0;padding:0 0 4px 0}
+    .title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 6px 8px;
+      margin: -4px -4px 8px;
+      border-radius: 10px;
+      background: rgba(59, 130, 246, .08);
+      color: var(--ink);
+    }
 
-  .branch>li{
-    position:relative;
-    padding-left:18px;
-    margin:8px 0;
-  }
+    .title small {
+      font-weight: 700;
+      color: #fff;
+      background: var(--accent);
+      padding: 2px 8px;
+      border-radius: 999px;
+    }
 
-  .branch>li::before{
-    content:"";
-    position:absolute;
-    left:6px;
-    top:0;
-    bottom:-8px;
-    width:2px;
-    background:var(--line);
-  }
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0 0 4px 0
+    }
 
-  .branch>li:last-child::before{bottom:10px}
-  .branch>li::after{
-    content:"";
-    position:absolute;
-    left:6px;
-    top:12px;
-    width:14px;
-    height:2px;
-    background:var(--line);
-  }
+    .branch>li {
+      position: relative;
+      padding-left: 18px;
+      margin: 8px 0;
+    }
 
-  .node{
-    display:inline-block;
-    background:#f9fafb;
-    border:1px solid var(--line);
-    border-radius:8px;
-    padding:8px 10px;
-    box-shadow:0 1px 0 rgba(0,0,0,.03) inset;
-  }
+    .branch>li::before {
+      content: "";
+      position: absolute;
+      left: 6px;
+      top: 0;
+      bottom: -8px;
+      width: 2px;
+      background: var(--line);
+    }
 
-  .lvl{
-    font-size:11px;
-    font-weight:700;
-    padding:2px 6px;
-    border-radius:999px;
-    margin-right:8px;
-  }
+    .branch>li:last-child::before {
+      bottom: 10px
+    }
 
-  .L1{background:#3b82f6;color:#fff}
-  .L2{background:#06b6d4;color:#fff}
-  .L3{background:#10b981;color:#fff}
-  .L4{background:#f59e0b;color:#fff}
+    .branch>li::after {
+      content: "";
+      position: absolute;
+      left: 6px;
+      top: 12px;
+      width: 14px;
+      height: 2px;
+      background: var(--line);
+    }
 
-  .muted{color:var(--muted);font-weight:500}
-  .col{display:flex;flex-direction:column;gap:12px}
-</style>
+    .node {
+      display: inline-block;
+      background: #f9fafb;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 8px 10px;
+      box-shadow: 0 1px 0 rgba(0, 0, 0, .03) inset;
+    }
+
+    .lvl {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 999px;
+      margin-right: 8px;
+    }
+
+    .L1 {
+      background: #3b82f6;
+      color: #fff
+    }
+
+    .L2 {
+      background: #06b6d4;
+      color: #fff
+    }
+
+    .L3 {
+      background: #10b981;
+      color: #fff
+    }
+
+    .L4 {
+      background: #f59e0b;
+      color: #fff
+    }
+
+    .muted {
+      color: var(--muted);
+      font-weight: 500
+    }
+
+    .col {
+      display: flex;
+      flex-direction: column;
+      gap: 12px
+    }
+  </style>
 
 </head>
+
 <body>
   <header>
     <div class="wrap">
@@ -150,51 +204,121 @@
         <div class="card">
           <div class="title"><span>1. Admin og konto</span><small class="lvl L1">L1</small></div>
           <ul class="branch">
+
             <li>
               <div class="node"><span class="lvl L2">L2</span>1.1 Registrering og innlogging</div>
               <ul class="branch">
-                <li><div class="node"><span class="lvl L3">L3</span>1.1.1 Registreringsskjema (student/arbeidsgiver)</div>
+
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>1.1.1 Registreringsskjema (student/arbeidsgiver)</div>
                   <ul class="branch">
-                    <li><div class="node"><span class="lvl L4">L4</span>1.1.1.1 Studentregistrering</div></li>
-                    <li><div class="node"><span class="lvl L4">L4</span>1.1.1.2 Arbeidsgiverregistrering</div></li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>1.1.1.1 Studentregistrering</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>1.1.1.2 Arbeidsgiverregistrering</div>
+                    </li>
                   </ul>
                 </li>
-                <li><div class="node"><span class="lvl L3">L3</span>1.1.2 E‑post/SMS‑verifikasjon</div></li>
-                <li><div class="node"><span class="lvl L3">L3</span>1.1.3 Påloggingsmodul</div></li>
+
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>1.1.2 Feide-innlogging (student)</div>
+                </li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>1.1.3 Bedriftsverifikasjon (orgnr-oppslag +
+                    firmaoppslag)</div>
+                </li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>1.1.4 E-postverifisering (arbeidsgiver)</div>
+                </li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>1.1.5 To-faktor-verifikasjon (epost/SMS)</div>
+                </li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>1.1.6 Påloggingsmodul</div>
+                </li>
+
               </ul>
             </li>
+
             <li>
               <div class="node"><span class="lvl L2">L2</span>1.2 Rolle og tilgang</div>
               <ul class="branch">
-                <li><div class="node"><span class="lvl L3">L3</span>1.2.1 Rollekatalog</div></li>
-                <li><div class="node"><span class="lvl L3">L3</span>1.2.2 Tilgangsmatrise</div></li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>1.2.1 Rollekatalog</div>
+                </li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>1.2.2 Tilgangsmatrise</div>
+                </li>
               </ul>
             </li>
+
             <li>
               <div class="node"><span class="lvl L2">L2</span>1.3 Kontoinnstillinger</div>
               <ul class="branch">
-                <li><div class="node"><span class="lvl L3">L3</span>1.3.1 Profilredigering</div></li>
-                <li><div class="node"><span class="lvl L3">L3</span>1.3.2 Varslingspreferanser</div></li>
-                <li><div class="node"><span class="lvl L3">L3</span>1.3.3 Personverninnstillinger</div></li>
+
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>1.3.1 Profilredigering</div>
+                  <ul class="branch">
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>1.3.1.1 Profilbilde</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>1.3.1.2 Personlig informasjon</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>1.3.1.3 Bio</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>1.3.1.4 Ferdigheter</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>1.3.1.5 Porteføljelenker</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>1.3.1.6 Forhåndsvis profil</div>
+                    </li>
+                  </ul>
+                </li>
+
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>1.3.2 Varslingspreferanser</div>
+                </li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>1.3.3 Privacy Preferences</div>
+                </li>
+
               </ul>
             </li>
+
             <li>
               <div class="node"><span class="lvl L2">L2</span>1.4 Administrasjonskonsoll</div>
               <ul class="branch">
-                <li><div class="node"><span class="lvl L3">L3</span>1.4.1 Brukeroversikt</div></li>
-                <li><div class="node"><span class="lvl L3">L3</span>1.4.2 Oppdragsoversikt</div></li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>1.4.1 Brukeroversikt</div>
+                </li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>1.4.2 Oppdragsoversikt</div>
+                </li>
               </ul>
             </li>
+
             <li>
               <div class="node"><span class="lvl L2">L2</span>1.5 Rapporter (admin)</div>
               <ul class="branch">
-                <li><div class="node"><span class="lvl L3">L3</span>1.5.1 Aktivitetssammendrag</div></li>
-                <li><div class="node"><span class="lvl L3">L3</span>1.5.2 Sikkerhetslogg‑rapport</div></li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>1.5.1 Aktivitetssammendrag</div>
+                </li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>1.5.2 Sikkerhetslogg-rapport</div>
+                </li>
               </ul>
             </li>
+
           </ul>
         </div>
       </div>
+
 
       <!-- S2 Student -->
       <div class="l1 col">
@@ -204,36 +328,460 @@
             <li>
               <div class="node"><span class="lvl L2">L2</span>2.1 Studentprofil</div>
               <ul class="branch">
-                <li><div class="node"><span class="lvl L3">L3</span>2.1.1 Basisprofil</div></li>
-                <li><div class="node"><span class="lvl L3">L3</span>2.1.2 Ferdighetsprofil</div></li>
-                <li><div class="node"><span class="lvl L3">L3</span>2.1.3 Portefølje/Lenker</div></li>
-                <li><div class="node"><span class="lvl L3">L3</span>2.1.4 Profilbilde og bio</div></li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>2.1.1 Basisprofil</div>
+                </li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>2.1.2 Ferdighetsprofil</div>
+                </li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>2.1.3 Portefølje/Lenker</div>
+                </li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>2.1.4 Profilbilde og bio</div>
+                </li>
               </ul>
             </li>
             <li>
               <div class="node"><span class="lvl L2">L2</span>2.2 Tilgjengelighet og Kalender</div>
               <ul class="branch">
-                <li><div class="node"><span class="lvl L3">L3</span>2.2.1 Tidsblokker</div></li>
-                <li><div class="node"><span class="lvl L3">L3</span>2.2.2 Eksamensmodus</div></li>
-                <li><div class="node"><span class="lvl L3">L3</span>2.2.3 Fravær/Ferie</div></li>
+
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>2.2.1 Ukentlig tilgjengelighet</div>
+                  <ul class="branch">
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>2.2.1.1 Velge tilgjengelige ukedager</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>2.2.1.2 Standard arbeidstid per dag (valgfritt)
+                      </div>
+                    </li>
+                  </ul>
+                </li>
+
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>2.2.2 Away Mode</div>
+                  <ul class="branch">
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>2.2.2.1 Skjule profil i søk</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>2.2.2.2 Eksamensmodus</div>
+                    </li>
+                  </ul>
+                </li>
+
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>2.2.3 Fravær og Helligdager</div>
+                  <ul class="branch">
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>2.2.3.1 Velge datoer (kalendervisning)</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>2.2.3.2 Overstyrer ukentlig tilgjengelighet</div>
+                    </li>
+                  </ul>
+                </li>
+
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>2.2.4 Hvordan tilgjengelighet fungerer</div>
+                  <ul class="branch">
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>2.2.4.1 Ukentlig plan = standardvisning</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>2.2.4.2 Fraværsdatoer har prioritet</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>2.2.4.3 Arbeidsgiver kan se tilgjengelighet</div>
+                    </li>
+                  </ul>
+                </li>
+
               </ul>
             </li>
+
             <li>
               <div class="node"><span class="lvl L2">L2</span>2.3 Erfaring og Historikk</div>
               <ul class="branch">
-                <li><div class="node"><span class="lvl L3">L3</span>2.3.1 Oppdragslogg</div></li>
-                <li><div class="node"><span class="lvl L3">L3</span>2.3.2 Dokumentert erfaring (PDF)</div></li>
-                <li><div class="node"><span class="lvl L3">L3</span>2.3.3 Delbar CV‑profil</div></li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>2.3.1 Download CV / PDF-generator</div>
+                  <ul class="branch">
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>2.3.1.1 Visning av CV-data (personinfo, skills,
+                        erfaring)
+                        erfaring)</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>2.3.1.2 Integrasjon av erfaring og reviews i CV
+                      </div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>2.3.1.3 PDF-generator</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>2.3.1.4 Download-pdf</div>
+                    </li>
+                  </ul>
+                </li>
+
               </ul>
             </li>
             <li>
               <div class="node"><span class="lvl L2">L2</span>2.4 Varsler (student)</div>
               <ul class="branch">
-                <li><div class="node"><span class="lvl L3">L3</span>2.4.1 Nært meg oppdrag</div></li>
-                <li><div class="node"><span class="lvl L3">L3</span>2.4.2 Bekreftelser/avslag</div></li>
-                <li><div class="node"><span class="lvl L3">L3</span>2.4.3 Betalingsmottak</div></li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>2.4.1 Nært meg oppdrag</div>
+                </li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>2.4.2 Bekreftelser/avslag</div>
+                </li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>2.4.3 Betalingsmottak</div>
+                </li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>2.4.4 Notifikasjonssenter</div>
+                  <ul class="branch">
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>2.4.4.1 Varslingsfeed (recent notifications)</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>2.4.4.2 Varslingspreferanser (email/SMS/types)
+                      </div>
+                    </li>
+                  </ul>
+                </li>
+
               </ul>
             </li>
+            <li>
+              <div class="node"><span class="lvl L2">L2</span>2.5 Student Dashboard</div>
+              <ul class="branch">
+
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>2.5.1 Oversiktsside</div>
+                  <ul class="branch">
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>2.5.1.1 Velkomstseksjon (navn, rolle,
+                        verifisering)</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>2.5.1.2 Hurtighandlinger (linker til profil,
+                        kalender, CV, lagrede jobber)</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>2.5.1.3 Anbefalte jobber</div>
+                      <ul class="branch">
+
+                        <li>
+                          <div class="node"><span class="lvl L4">L4</span>2.5.1.3.1 Match-baserte anbefalinger (prosent,
+                            skill-match)</div>
+                        </li>
+
+                        <li>
+                          <div class="node"><span class="lvl L4">L4</span>2.5.1.3.2 Jobbkort (lønn, ferdigheter,
+                            varighet, lokasjon, dato)</div>
+                        </li>
+
+
+                      </ul>
+                    </li>
+
+                  </ul>
+                </li>
+
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>2.5.2 Profilkompletthet</div>
+                  <ul class="branch">
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>2.5.2.1 Fremdriftsmåler (% complete)</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>2.5.2.2 Tips for forbedring</div>
+                    </li>
+                  </ul>
+                </li>
+
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>2.5.3 Fullførte oppdrag</div>
+                  <ul class="branch">
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>2.5.3.1 Liste over fullførte jobber</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>2.5.3.2 Skriv vurdering / rediger vurdering</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>2.5.3.3 Link til prosjektoversikt</div>
+                    </li>
+                  </ul>
+                </li>
+
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>2.5.4 Vurderinger fra arbeidsgivere</div>
+                  <ul class="branch">
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>2.5.4.1 Listevisning av vurderinger</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>2.5.4.2 Dato og avsender</div>
+                    </li>
+                  </ul>
+                </li>
+
+                <li>
+                  <div class="node"><span class="lvl L2 L3">L3</span>2.5.5 Enkel statistikk (dashboard)</div>
+                  <ul class="branch">
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>2.5.5.1 Antall søkte jobber</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>2.5.5.2 Fullførte jobber</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>2.5.5.3 Total inntjening</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>2.5.5.4 Pålitelighet (oppmøte / kansellering)
+                      </div>
+                    </li>
+                  </ul>
+                </li>
+
+              </ul>
+            </li>
+            <li>
+              <div class="node"><span class="lvl L2">L2</span>2.6 Student Insights & Analytics (Detaljert innsikt &
+                analyse)</div>
+              <ul class="branch">
+
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>2.6.1 Oversikt og nøkkeltall</div>
+                  <ul class="branch">
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>2.6.1.1 Total inntjening</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>2.6.1.2 Fullførte jobber</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>2.6.1.3 Profilvisninger</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>2.6.1.4 Gjennomsnittlig rating</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>2.6.1.5 Antall aktive søknader</div>
+                    </li>
+                  </ul>
+                </li>
+
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>2.6.2 Inntjeningsanalyse</div>
+                  <ul class="branch">
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>2.6.2.1 Inntjeningsgraf (månedlig trend)</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>2.6.2.2 Sammenligning måned-over-måned</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>2.6.2.3 Estimert månedlig rate basert på aktivitet
+                      </div>
+                    </li>
+                  </ul>
+                </li>
+
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>2.6.3 Topp ferdigheter og inntekt</div>
+                  <ul class="branch">
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>2.6.3.1 Ferdigheter med høyest inntekt</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>2.6.3.2 Antall jobber per ferdighet</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>2.6.3.3 Inntekt per ferdighetskategori</div>
+                    </li>
+                  </ul>
+                </li>
+
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>2.6.4 Aktivitet og historikk</div>
+                  <ul class="branch">
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>2.6.4.1 Fullførte jobber (hendelseslogg)</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>2.6.4.2 Sendte søknader (logg)</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>2.6.4.3 Profilvisninger (arbeidsgivere)</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>2.6.4.4 Mottatte vurderinger</div>
+                    </li>
+                  </ul>
+                </li>
+
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>2.6.5 Ytelse og kvalitet</div>
+                  <ul class="branch">
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>2.6.5.1 Responsrate</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>2.6.5.2 Suksessrate (fullførte kontra startet)
+                      </div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>2.6.5.3 Totale timer og snitt timepris</div>
+                    </li>
+                  </ul>
+                </li>
+
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>2.6.6 Forbedringsforslag</div>
+                  <ul class="branch">
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>2.6.6.1 Profiloptimaliseringstips</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>2.6.6.2 Tips basert på markedsetterspørsel</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>2.6.6.3 Responsrateguiding (respond within 24h)
+                      </div>
+                    </li>
+                  </ul>
+                </li>
+
+              </ul>
+            </li>
+            <li>
+              <div class="node"><span class="lvl L2">L2</span>2.7 Aktive jobber og leveranser</div>
+              <ul class="branch">
+
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>2.7.1 Active Jobs (student)</div>
+                  <ul class="branch">
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>2.7.1.1 Oversikt over aktive jobber</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>2.7.1.2 Jobbkort (progress, timer, frister)</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>2.7.1.3 Handlinger (View Details, Log Hours,
+                        Message, Manage Job)</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>2.7.1.4 Statuskategorier (In Progress / Ready to
+                        Deliver / Upcoming)</div>
+                    </li>
+                  </ul>
+                </li>
+
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>2.7.2 Fullføre og levere jobb</div>
+                  <ul class="branch">
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>2.7.2.1 Jobbdetaljer & kontraktinformasjon</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>2.7.2.2 Oppsummering av arbeid</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>2.7.2.3 Leveransebeskrivelse (deliverables)</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>2.7.2.4 Filopplasting (drag & drop, 5GB limit)
+                      </div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>2.7.2.5 Erfaring & feedback (student →
+                        arbeidsgiver)</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>2.7.2.6 Vurdering av arbeidsgiver (rating +
+                        review)</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>2.7.2.7 Estimert betaling basert på timer</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>2.7.2.8 Innsending av jobbleveranse (Complete &
+                        Submit)</div>
+                    </li>
+                  </ul>
+                </li>
+
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>2.7.3 Administrere aktiv jobb</div>
+                  <ul class="branch">
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>2.7.3.1 Endringsforespørsler (time extensions,
+                        hours changes, cancellations)</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>2.7.3.2 Begrunnelse for forespørsel (tekstfelt)
+                      </div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>2.7.3.3 Innsending & godkjenningsflyt</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>2.7.3.4 Alternativ: Åpne chat i stedet for formell
+                        forespørsel</div>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+
+            <li>
+              <div class="node"><span class="lvl L2">L2</span>2.8 Finne og søke oppdrag</div>
+              <ul class="branch">
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>2.8.1 Jobbfeed (studentversjon)</div>
+                </li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>2.8.2 Søk og filtrering</div>
+                </li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>2.8.3 Jobbdetaljer</div>
+                </li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>2.8.4 Lagrede jobber</div>
+                  <ul class="branch">
+
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>2.8.4.1 Liste over lagrede jobber (Saved)</div>
+                    </li>
+
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>2.8.4.2 Utløpte jobber (Expired)</div>
+                    </li>
+
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>2.8.4.3 Jobbkort (skills, lønn, varighet,
+                        lokasjon, dato)</div>
+                    </li>
+
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>2.8.4.4 Handlinger (View Details, Remove)</div>
+                    </li>
+
+                  </ul>
+                </li>
+
+              </ul>
+            </li>
+
+
+
+
           </ul>
         </div>
       </div>
@@ -246,31 +794,501 @@
             <li>
               <div class="node"><span class="lvl L2">L2</span>3.1 Bedriftsprofil</div>
               <ul class="branch">
-                <li><div class="node"><span class="lvl L3">L3</span>3.1.1 Firmainformasjon</div></li>
-                <li><div class="node"><span class="lvl L3">L3</span>3.1.2 Kontaktperson</div></li>
-                <li><div class="node"><span class="lvl L3">L3</span>3.1.3 Logo og beskrivelse</div></li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>3.1.1 Firmainformasjon</div>
+                </li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>3.1.2 Kontaktperson</div>
+                </li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>3.1.3 Logo og beskrivelse</div>
+                </li>
               </ul>
             </li>
             <li>
               <div class="node"><span class="lvl L2">L2</span>3.2 Oppdragsadministrasjon</div>
               <ul class="branch">
-                <li><div class="node"><span class="lvl L3">L3</span>3.2.1 Oppdragsmaler</div></li>
-                <li><div class="node"><span class="lvl L3">L3</span>3.2.2 Budsjett/rammer</div></li>
-                <li><div class="node"><span class="lvl L3">L3</span>3.2.3 Team‑tilgang</div></li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>3.2.1 Oppdragsmaler</div>
+                </li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>3.2.2 Budsjett/rammer</div>
+                </li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>3.2.3 Team-tilgang</div>
+                </li>
               </ul>
             </li>
             <li>
               <div class="node"><span class="lvl L2">L2</span>3.3 Arbeidsgivermerker</div>
               <ul class="branch">
-                <li><div class="node"><span class="lvl L3">L3</span>3.3.1 Trygg arbeidsgiver</div></li>
-                <li><div class="node"><span class="lvl L3">L3</span>3.3.2 Vi gir unge sjansen</div></li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>3.3.1 Badges & Achievements</div>
+                  <ul class="branch">
+
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>3.3.1.1 Student-Friendly</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>3.3.1.2 High Feedback Score</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>3.3.1.3 Top Employer</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>3.3.1.4 Low Cancellation Rate</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>3.3.1.5 Fast Growing</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>3.3.1.6 Excellence Award</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>3.3.1.7 High Volume Employer</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>3.3.1.8 Quick Responder</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>3.3.1.9 Verified Employer</div>
+                    </li>
+
+                  </ul>
+                </li>
               </ul>
             </li>
+
             <li>
               <div class="node"><span class="lvl L2">L2</span>3.4 Varsler (arbeidsgiver)</div>
               <ul class="branch">
-                <li><div class="node"><span class="lvl L3">L3</span>3.4.1 Nye kandidater</div></li>
-                <li><div class="node"><span class="lvl L3">L3</span>3.4.2 Frister/levering</div></li>
+
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>3.4.1 Notifikasjonssenter</div>
+                  <ul class="branch">
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>3.4.1.1 Varslingsfeed (recent notifications)</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>3.4.1.2 Varslingspreferanser (email/SMS/types)
+                      </div>
+                    </li>
+                  </ul>
+                </li>
+
+              </ul>
+            </li>
+
+
+            <li>
+              <div class="node"><span class="lvl L2">L2</span>3.5 Arbeidsgiver Dashboard</div>
+              <ul class="branch">
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>3.5.1 Oversiktsside</div>
+                  <ul class="branch">
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>3.5.1.1 Velkomstseksjon (firmanavn, badges,
+                        verifisering)</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>3.5.1.2 Hurtighandlinger (post job, profil, team,
+                        payments)</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>3.5.1.3 Statuskort (aktive jobber, søkere, ansatt
+                        denne måneden)</div>
+                    </li>
+                  </ul>
+                </li>
+
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>3.5.2 Bedriftsprofilseksjon</div>
+                  <ul class="branch">
+
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>3.5.2.1 Visning av firma-info</div>
+                    </li>
+
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>3.5.2.2 Rediger bedriftsprofil</div>
+                      <ul class="branch">
+
+                        <li>
+                          <div class="node"><span class="lvl L4">L4</span>3.5.2.2.1 Last opp logo (JPG/PNG/SVG, maks
+                            2MB)</div>
+                        </li>
+
+                        <li>
+                          <div class="node"><span class="lvl L4">L4</span>3.5.2.2.2 Grunnleggende firmainformasjon
+                            (navn, person, e-post, telefon)</div>
+                        </li>
+
+                        <li>
+                          <div class="node"><span class="lvl L4">L4</span>3.5.2.2.3 Lokasjon og nettside</div>
+                        </li>
+
+                        <li>
+                          <div class="node"><span class="lvl L4">L4</span>3.5.2.2.4 Om bedriften (beskrivelse 0–1000
+                            tegn)</div>
+                        </li>
+
+                        <li>
+                          <div class="node"><span class="lvl L4">L4</span>3.5.2.2.5 Bedriftsdetaljer (industri,
+                            størrelse, grunnlagt-år)</div>
+                        </li>
+
+                        <li>
+                          <div class="node"><span class="lvl L4">L4</span>3.5.2.2.6 Forhåndsvis profil (preview)</div>
+                        </li>
+
+                      </ul>
+                    </li>
+
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>3.5.2.3 Offentlig profil (student-visning)</div>
+                    </li>
+
+                  </ul>
+                </li>
+
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>3.5.3 Fullførte prosjekter</div>
+                  <ul class="branch">
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>3.5.3.1 Liste over fullførte jobber</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>3.5.3.2 Skriv vurdering / rediger vurdering</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>3.5.3.3 Link til prosjektoversikt</div>
+                    </li>
+                  </ul>
+                </li>
+
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>3.5.4 Vurderinger fra studenter</div>
+                  <ul class="branch">
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>3.5.4.1 Listevisning av reviews</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>3.5.4.2 Dato og avsender (student)</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>3.5.4.3 Snittscore / omdømmestatus</div>
+                    </li>
+                  </ul>
+                </li>
+
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>3.5.5 Statistikk og innsikt</div>
+                  <ul class="branch">
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>3.5.5.1 Antall søkere totalt</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>3.5.5.2 Antall ansatte</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>3.5.5.3 Fullførte prosjekter</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>3.5.5.4 Pålitelighet (responsrate, kanselleringer)
+                      </div>
+                    </li>
+                  </ul>
+                </li>
+
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>3.5.6 Team og organisasjon</div>
+                  <ul class="branch">
+
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>3.5.6.1 Team Members Side</div>
+                    </li>
+
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>3.5.6.2 Liste over teammedlemmer (navn, rolle,
+                        e-post, joined-dato)</div>
+                    </li>
+
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>3.5.6.3 Legge til teammedlem (invitasjon med
+                        e-post)</div>
+                    </li>
+
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>3.5.6.4 Endre rolle (Owner, Admin, Manager,
+                        Recruiter)</div>
+                    </li>
+
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>3.5.6.5 Rollepermissions (oversikt over
+                        tilgangsnivåer)</div>
+                    </li>
+
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>3.5.6.6 Fjerne teammedlem</div>
+                    </li>
+
+                  </ul>
+                </li>
+
+              </ul>
+            </li>
+            <li>
+              <div class="node"><span class="lvl L2">L2</span>3.6 Insights & Analytics</div>
+              <ul class="branch">
+
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>3.6.1 Oversikt og nøkkeltall</div>
+                  <ul class="branch">
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>3.6.1.1 Total views</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>3.6.1.2 Antall søknader</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>3.6.1.3 Konverteringsrate (views → søknader)</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>3.6.1.4 Aktive jobber</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>3.6.1.5 Responsrate og svartid</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>3.6.1.6 Profilvisninger</div>
+                    </li>
+                  </ul>
+                </li>
+
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>3.6.2 Jobbprestasjon</div>
+                  <ul class="branch">
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>3.6.2.1 Statistikk per jobb (views, søknader,
+                        konvertering)</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>3.6.2.2 Aktiv tid (dager aktiv)</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>3.6.2.3 Trendindikator (trending/stable/declining)
+                      </div>
+                    </li>
+                  </ul>
+                </li>
+
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>3.6.3 Søknadskilder</div>
+                  <ul class="branch">
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>3.6.3.1 Direkte søk</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>3.6.3.2 Jobbanbefalinger</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>3.6.3.3 Profilvisninger</div>
+                    </li>
+                  </ul>
+                </li>
+
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>3.6.4 Etterspurte ferdigheter</div>
+                  <ul class="branch">
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>3.6.4.1 Ferdigheter nevnt i aktive jobber</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>3.6.4.2 Antall jobber per ferdighet</div>
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>3.6.6 Rapportering</div>
+                  <ul class="branch">
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>3.6.6.1 Last ned rapport (CSV/PDF)</div>
+                    </li>
+                  </ul>
+                </li>
+
+              </ul>
+            </li>
+            <li>
+              <div class="node"><span class="lvl L2">L2</span>3.7 Active Jobs & Project Management</div>
+              <ul class="branch">
+
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>3.7.1 Job Postings</div>
+                  <ul class="branch">
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>3.7.1.1 Liste over aktive jobbutlysninger</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>3.7.1.2 Jobbkort (views, applicants, status,
+                        datoer)</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>3.7.1.3 Handlinger (View Details, Insights,
+                        Applicants, Edit)</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>3.7.1.4 Post New Job flyt</div>
+                    </li>
+                  </ul>
+                </li>
+
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>3.7.2 Job Performance Insights</div>
+                  <ul class="branch">
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>3.7.2.1 Oversikt (views, applicants, CTR,
+                        conversion rate)</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>3.7.2.2 Daily Performance graf (7-dagers trend)
+                      </div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>3.7.2.3 Top Locations (geografi + søknader)</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>3.7.2.4 Performance Summary (visibility,
+                        engagement, conversion)</div>
+                    </li>
+                  </ul>
+                </li>
+
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>3.7.3 Applicant Management</div>
+                  <ul class="branch">
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>3.7.3.1 Vise liste over applicants
+                        (all/pending/reviewed/accepted)</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>3.7.3.2 Kandidatkort (skills, availability,
+                        portfolio, description)</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>3.7.3.3 Handlinger: Accept / Reject / Mark as
+                        Reviewed / Message</div>
+                    </li>
+                  </ul>
+                </li>
+
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>3.7.4 Edit Job Posting</div>
+                  <ul class="branch">
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>3.7.4.1 Redigere tittel, beskrivelse, sted og
+                        datoer</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>3.7.4.2 Lønnstype og kompensasjon (hourly
+                        rate/interval)</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>3.7.4.3 Krav til ferdigheter (add/remove skills)
+                      </div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>3.7.4.4 Internship credit toggle</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>3.7.4.5 Slett jobbutlysning</div>
+                    </li>
+                  </ul>
+                </li>
+
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>3.7.5 Ongoing Projects</div>
+                  <ul class="branch">
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>3.7.5.1 Prosjektkort (progress %, timeline,
+                        student info)</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>3.7.5.2 Handlinger: View Hours, Message, Manage
+                        Project</div>
+                    </li>
+                  </ul>
+                </li>
+
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>3.7.6 Job Delivery Review</div>
+                  <ul class="branch">
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>3.7.6.1 Vise studentens innsending (tekst, timer,
+                        notater)</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>3.7.6.2 Filhåndtering (download all, individuelle
+                        filer)</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>3.7.6.3 Arbeidsgivers vurdering (rating + review)
+                      </div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>3.7.6.4 Betalingsoppsummering (timer × sats →
+                        total)</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>3.7.6.5 Accept Delivery / Request Changes</div>
+                    </li>
+                  </ul>
+                </li>
+
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>3.7.7 Request Changes Flow</div>
+                  <ul class="branch">
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>3.7.7.1 Change description (detaljerte krav)</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>3.7.7.2 Ny deadline (resubmission date)</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>3.7.7.3 Prioritetsnivå (low/medium/high)</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>3.7.7.4 Payment adjustment (no change / reduce /
+                        bonus)</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>3.7.7.5 Innsending og varsling til student</div>
+                    </li>
+                  </ul>
+                </li>
+
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>3.7.8 Manage Active Job</div>
+                  <ul class="branch">
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>3.7.8.1 Endringsforespørsler (time extension,
+                        hours, cancel)</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>3.7.8.2 Begrunnelse for forespørsel (tekstfelt,
+                        validering)</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>3.7.8.3 Godkjenningsflyt (student må respondere)
+                      </div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>3.7.8.4 Alternativ: Åpne chat i stedet for
+                        forespørsel</div>
+                    </li>
+                  </ul>
+                </li>
+
               </ul>
             </li>
           </ul>
@@ -285,35 +1303,114 @@
             <li>
               <div class="node"><span class="lvl L2">L2</span>4.1 Oppdragsoppretting</div>
               <ul class="branch">
-                <li><div class="node"><span class="lvl L3">L3</span>4.1.1 Grunnskjema</div></li>
-                <li><div class="node"><span class="lvl L3">L3</span>4.1.2 Sted/remote og tid</div></li>
-                <li><div class="node"><span class="lvl L3">L3</span>4.1.3 Kompetansekrav</div></li>
-                <li><div class="node"><span class="lvl L3">L3</span>4.1.4 Praksisrelevant‑flagg</div></li>
+
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>4.1.1 Jobbdetaljer</div>
+                  <ul class="branch">
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>4.1.1.1 Jobbtittel</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>4.1.1.2 Jobbbeskrivelse</div>
+                    </li>
+                  </ul>
+                </li>
+
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>4.1.2 Sted og tidsramme</div>
+                  <ul class="branch">
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>4.1.2.1 Lokasjon (Oslo/Remote)</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>4.1.2.2 Startdato</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>4.1.2.3 Sluttdato</div>
+                    </li>
+                  </ul>
+                </li>
+
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>4.1.3 Kompensasjon</div>
+                  <ul class="branch">
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>4.1.3.1 Lønnstype (hourly/fixed)</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>4.1.3.2 Timesrate (intervall)</div>
+                    </li>
+                  </ul>
+                </li>
+
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>4.1.4 Krav til ferdigheter</div>
+                  <ul class="branch">
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>4.1.4.1 Ferdighetstags (React, Node.js, Python…)
+                      </div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>4.1.4.2 Legg til/Fjern skill</div>
+                    </li>
+                  </ul>
+                </li>
+
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>4.1.5 Ekstra valg</div>
+                  <ul class="branch">
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>4.1.5.1 Internship-credit toggle</div>
+                    </li>
+                  </ul>
+                </li>
+
               </ul>
             </li>
+
             <li>
               <div class="node"><span class="lvl L2">L2</span>4.2 Oppdragsfeed</div>
               <ul class="branch">
-                <li><div class="node"><span class="lvl L3">L3</span>4.2.1 Liste/grid</div></li>
-                <li><div class="node"><span class="lvl L3">L3</span>4.2.2 Detaljside</div></li>
-                <li><div class="node"><span class="lvl L3">L3</span>4.2.3 Lagrede søk</div></li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>4.2.1 Liste/grid</div>
+                </li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>4.2.2 Detaljside</div>
+                </li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>4.2.3 Lagrede søk</div>
+                </li>
               </ul>
             </li>
             <li>
               <div class="node"><span class="lvl L2">L2</span>4.3 Filtre og Søk</div>
               <ul class="branch">
-                <li><div class="node"><span class="lvl L3">L3</span>4.3.1 Tidsfilter</div></li>
-                <li><div class="node"><span class="lvl L3">L3</span>4.3.2 Steds-/radiusfilter</div></li>
-                <li><div class="node"><span class="lvl L3">L3</span>4.3.3 Kompetansefilter</div></li>
-                <li><div class="node"><span class="lvl L3">L3</span>4.3.4 Lønnsfilter</div></li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>4.3.1 Tidsfilter</div>
+                </li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>4.3.2 Steds-/radiusfilter</div>
+                </li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>4.3.3 Kompetansefilter</div>
+                </li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>4.3.4 Lønnsfilter</div>
+                </li>
               </ul>
             </li>
             <li>
               <div class="node"><span class="lvl L2">L2</span>4.4 Søknad</div>
               <ul class="branch">
-                <li><div class="node"><span class="lvl L3">L3</span>4.4.1 Ett‑klikk søknad</div></li>
-                <li><div class="node"><span class="lvl L3">L3</span>4.4.2 Profilkort‑vedlegg</div></li>
-                <li><div class="node"><span class="lvl L3">L3</span>4.4.3 Forhåndsspørsmål</div></li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>4.4.1 Ett‑klikk søknad</div>
+                </li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>4.4.2 Profilkort‑vedlegg</div>
+                </li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>4.4.3 Forhåndsspørsmål</div>
+                </li>
               </ul>
             </li>
           </ul>
@@ -328,22 +1425,34 @@
             <li>
               <div class="node"><span class="lvl L2">L2</span>5.1 Matchmotor</div>
               <ul class="branch">
-                <li><div class="node"><span class="lvl L3">L3</span>5.1.1 Relevansscore</div></li>
-                <li><div class="node"><span class="lvl L3">L3</span>5.1.2 Prioritetsrekkefølge</div></li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>5.1.1 Relevansscore</div>
+                </li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>5.1.2 Prioritetsrekkefølge</div>
+                </li>
               </ul>
             </li>
             <li>
               <div class="node"><span class="lvl L2">L2</span>5.2 Kandidatoversikt</div>
               <ul class="branch">
-                <li><div class="node"><span class="lvl L3">L3</span>5.2.1 Kandidatkort</div></li>
-                <li><div class="node"><span class="lvl L3">L3</span>5.2.2 Hurtiggodkjenning</div></li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>5.2.1 Kandidatkort</div>
+                </li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>5.2.2 Hurtiggodkjenning</div>
+                </li>
               </ul>
             </li>
             <li>
               <div class="node"><span class="lvl L2">L2</span>5.3 Oppdragsflyt</div>
               <ul class="branch">
-                <li><div class="node"><span class="lvl L3">L3</span>5.3.1 Statusmodell</div></li>
-                <li><div class="node"><span class="lvl L3">L3</span>5.3.2 Fristvarsler</div></li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>5.3.1 Statusmodell</div>
+                </li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>5.3.2 Fristvarsler</div>
+                </li>
               </ul>
             </li>
           </ul>
@@ -355,31 +1464,240 @@
         <div class="card">
           <div class="title"><span>6. Betaling og kontrakt</span><small class="lvl L1">L1</small></div>
           <ul class="branch">
+
             <li>
               <div class="node"><span class="lvl L2">L2</span>6.1 Betalingsgrunnlag</div>
               <ul class="branch">
-                <li><div class="node"><span class="lvl L3">L3</span>6.1.1 Lønnstype (time/fast)</div></li>
-                <li><div class="node"><span class="lvl L3">L3</span>6.1.2 Beløpsberegning</div></li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>6.1.1 Lønnstype (time/fast)</div>
+                </li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>6.1.2 Beløpsberegning</div>
+                </li>
               </ul>
             </li>
+
             <li>
               <div class="node"><span class="lvl L2">L2</span>6.2 Betalingsløsning</div>
               <ul class="branch">
-                <li><div class="node"><span class="lvl L3">L3</span>6.2.1 Stripe/Vipps tilkobling</div></li>
-                <li><div class="node"><span class="lvl L3">L3</span>6.2.3 Transaksjonslogg</div></li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>6.2.1 Stripe/Vipps tilkobling</div>
+                </li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>6.2.2 Transaksjonslogg</div>
+                </li>
               </ul>
             </li>
+
             <li>
               <div class="node"><span class="lvl L2">L2</span>6.3 Kontrakt og kvittering</div>
               <ul class="branch">
-                <li><div class="node"><span class="lvl L3">L3</span>6.3.1 Mini‑kontrakt</div></li>
-                <li><div class="node"><span class="lvl L3">L3</span>6.3.2 Akseptlogg</div></li>
-                <li><div class="node"><span class="lvl L3">L3</span>6.3.3 Kvittering (PDF/e‑post)</div></li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>6.3.1 Mini-kontrakt</div>
+                </li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>6.3.2 Akseptlogg</div>
+                </li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>6.3.3 Kvittering (PDF/e-post)</div>
+                </li>
               </ul>
             </li>
+
             <li>
-              <div class="node"><span class="lvl L2">L2</span>6.4 Utbetalingsoversikt (student)</div>
+              <div class="node"><span class="lvl L2">L2</span>6.4 Utbetalinger (student)</div>
+              <ul class="branch">
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>6.4.1 Utbetalingskonto</div>
+                </li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>6.4.2 Bankverifisering</div>
+                </li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>6.4.3 Saldo (total/pending/available)</div>
+                </li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>6.4.4 Utbetalingsprosess (5 virkedager)</div>
+                </li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>6.4.5 Transaksjonshistorikk</div>
+                </li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>6.4.6 Varsler om utbetaling</div>
+                </li>
+              </ul>
             </li>
+
+            <li>
+              <div class="node"><span class="lvl L2">L2</span>6.5 Bedriftsfakturering (B2B Billing)</div>
+              <ul class="branch">
+
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>6.5.1 Fakturaprofil (bedrift)</div>
+                  <ul class="branch">
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>6.5.1.1 Organisasjonsnummer</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>6.5.1.2 MVA-nummer</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>6.5.1.3 Fakturaadresse</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>6.5.1.4 Økonomi-kontakt</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>6.5.1.5 PO/Referansefelt</div>
+                    </li>
+                  </ul>
+                </li>
+
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>6.5.2 Fakturakanal</div>
+                  <ul class="branch">
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>6.5.2.1 EHF</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>6.5.2.2 PDF via e-post</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>6.5.2.3 Fakturavarsling</div>
+                    </li>
+                  </ul>
+                </li>
+
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>6.5.3 Betalingsvilkår og behandling</div>
+                  <ul class="branch">
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>6.5.3.1 Net 30 betalingsfrist</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>6.5.3.2 KID-nummer</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>6.5.3.3 Bankoverføring</div>
+                    </li>
+                  </ul>
+                </li>
+
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>6.5.4 Fakturaoversikt (bedrift)</div>
+                  <ul class="branch">
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>6.5.4.1 Ubetalte fakturaer</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>6.5.4.2 Betalte fakturaer</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>6.5.4.3 PDF-fakturaer</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>6.5.4.4 Send til regnskap</div>
+                    </li>
+                  </ul>
+                </li>
+
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>6.5.5 Regnskapsintegrasjoner</div>
+                  <ul class="branch">
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>6.5.5.1 Fiken</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>6.5.5.2 Tripletex</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>6.5.5.3 PowerOffice GO</div>
+                    </li>
+                  </ul>
+                </li>
+
+              </ul>
+            </li>
+
+            <li>
+              <div class="node"><span class="lvl L2">L2</span>6.6 Timeføring (Work Hours Logging)</div>
+              <ul class="branch">
+
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>6.6.1 Tidspostering (student)</div>
+                  <ul class="branch">
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>6.6.1.1 Loggføring av timer (dato, timer,
+                        beskrivelse)</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>6.6.1.2 Hurtigvalg (2h/4h/6h/8h)</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>6.6.1.3 Validering (minimum tekst, timeformat)
+                      </div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>6.6.1.4 Redigere / slette egne timer</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>6.6.1.5 Studentens timeoversikt</div>
+                    </li>
+                  </ul>
+                </li>
+
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>6.6.2 Godkjenning og kontroll (arbeidsgiver)</div>
+                  <ul class="branch">
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>6.6.2.1 Oversikt over innsendte timer</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>6.6.2.2 Detaljert beskrivelse pr. dag</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>6.6.2.3 Timer godkjenning/avslag</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>6.6.2.4 Timegrunnlag for faktura / utbetaling
+                      </div>
+                    </li>
+                  </ul>
+                </li>
+
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>6.6.3 Kontraktsprogresjon</div>
+                  <ul class="branch">
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>6.6.3.1 Timer brukt / total avtale</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>6.6.3.2 Prosent ferdigstilt</div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>6.6.3.3 Automatiske beregninger (timer × sats)
+                      </div>
+                    </li>
+                  </ul>
+                </li>
+
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>6.6.4 Varsler og påminnelser</div>
+                  <ul class="branch">
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>6.6.4.1 Varsel til student: Logg timer daglig
+                      </div>
+                    </li>
+                    <li>
+                      <div class="node"><span class="lvl L4">L4</span>6.6.4.2 Varsel til arbeidsgiver: Timer klare for
+                        godkjenning</div>
+                    </li>
+                  </ul>
+                </li>
+
+              </ul>
+            </li>
+
           </ul>
         </div>
       </div>
@@ -392,23 +1710,37 @@
             <li>
               <div class="node"><span class="lvl L2">L2</span>7.1 Identitet og Bedrift</div>
               <ul class="branch">
-                <li><div class="node"><span class="lvl L3">L3</span>7.1.1 Studentverifisering</div></li>
-                <li><div class="node"><span class="lvl L3">L3</span>7.1.2 Bedriftsoppslag</div></li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>7.1.1 Studentverifisering</div>
+                </li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>7.1.2 Bedriftsoppslag</div>
+                </li>
               </ul>
             </li>
             <li>
               <div class="node"><span class="lvl L2">L2</span>7.2 Dokumenter</div>
               <ul class="branch">
-                <li><div class="node"><span class="lvl L3">L3</span>7.2.1 Opplasting</div></li>
-                <li><div class="node"><span class="lvl L3">L3</span>7.2.2 Manuell kvalitetssjekk</div></li>
-                <li><div class="node"><span class="lvl L3">L3</span>7.2.3 Verifisert‑badge</div></li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>7.2.1 Opplasting</div>
+                </li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>7.2.2 Manuell kvalitetssjekk</div>
+                </li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>7.2.3 Verifisert‑badge</div>
+                </li>
               </ul>
             </li>
             <li>
               <div class="node"><span class="lvl L2">L2</span>7.3 Pålitelighet</div>
               <ul class="branch">
-                <li><div class="node"><span class="lvl L3">L3</span>7.3.1 Oppmøte‑score</div></li>
-                <li><div class="node"><span class="lvl L3">L3</span>7.3.2 Avlysningsrate</div></li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>7.3.1 Oppmøte‑score</div>
+                </li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>7.3.2 Avlysningsrate</div>
+                </li>
               </ul>
             </li>
           </ul>
@@ -423,25 +1755,43 @@
             <li>
               <div class="node"><span class="lvl L2">L2</span>8.1 Meldinger</div>
               <ul class="branch">
-                <li><div class="node"><span class="lvl L3">L3</span>8.1.1 Oppdragschat (en til en)</div></li>
-                <li><div class="node"><span class="lvl L3">L3</span>8.1.2 Vedlegg</div></li>
-                <li><div class="node"><span class="lvl L3">L3</span>8.1.3 Moderasjonsflagg</div></li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>8.1.1 Oppdragschat (en til en)</div>
+                </li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>8.1.2 Vedlegg</div>
+                </li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>8.1.3 Moderasjonsflagg</div>
+                </li>
               </ul>
             </li>
             <li>
               <div class="node"><span class="lvl L2">L2</span>8.2 Varslingskanaler</div>
               <ul class="branch">
-                <li><div class="node"><span class="lvl L3">L3</span>8.2.1 Push</div></li>
-                <li><div class="node"><span class="lvl L3">L3</span>8.2.2 E‑post</div></li>
-                <li><div class="node"><span class="lvl L3">L3</span>8.2.3 SMS (opsjon)</div></li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>8.2.1 Push</div>
+                </li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>8.2.2 E‑post</div>
+                </li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>8.2.3 SMS (opsjon)</div>
+                </li>
               </ul>
             </li>
             <li>
               <div class="node"><span class="lvl L2">L2</span>8.3 Statusmeldinger</div>
               <ul class="branch">
-                <li><div class="node"><span class="lvl L3">L3</span>8.3.1 Nye match</div></li>
-                <li><div class="node"><span class="lvl L3">L3</span>8.3.2 Bekreftet/avslått</div></li>
-                <li><div class="node"><span class="lvl L3">L3</span>8.3.3 Betalt/kvittering</div></li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>8.3.1 Nye match</div>
+                </li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>8.3.2 Bekreftet/avslått</div>
+                </li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>8.3.3 Betalt/kvittering</div>
+                </li>
               </ul>
             </li>
           </ul>
@@ -456,21 +1806,66 @@
             <li>
               <div class="node"><span class="lvl L2">L2</span>9.1 Studentrating</div>
               <ul class="branch">
-                <li><div class="node"><span class="lvl L3">L3</span>9.1.1 Stjerner (1–5)</div></li>
-                <li><div class="node"><span class="lvl L3">L3</span>9.1.2 Kort omtale</div></li>
-                <li><div class="node"><span class="lvl L3">L3</span>9.1.3 Snittscore i profil</div></li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>9.1.1 Stjerner (1–5)</div>
+                </li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>9.1.2 Kort omtale</div>
+                </li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>9.1.3 Snittscore i profil</div>
+                </li>
               </ul>
             </li>
             <li>
               <div class="node"><span class="lvl L2">L2</span>9.2 Arbeidsgiverrating</div>
               <ul class="branch">
-                <li><div class="node"><span class="lvl L3">L3</span>9.2.1 Stjerner (1–5)</div></li>
-                <li><div class="node"><span class="lvl L3">L3</span>9.2.2 Kort omtale</div></li>
-                <li><div class="node"><span class="lvl L3">L3</span>9.2.3 Arbeidsgiver‑merker</div></li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>9.2.1 Stjerner (1–5)</div>
+                </li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>9.2.2 Kort omtale</div>
+                </li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>9.2.3 Kobling mot arbeidsgiver-merker (fra 3.3)</div>
+                </li>
               </ul>
             </li>
             <li>
-              <div class="node"><span class="lvl L2">L2</span>9.3 Rapporteringsskjema</div>
+              <div class="node"><span class="lvl L3">L3</span>9.3 Rapporteringsskjema</div>
+              <ul class="branch">
+
+                <li>
+                  <div class="node"><span class="lvl L4">L4</span>9.3.1 Rapporttype (Student / Arbeidsgiver)</div>
+                </li>
+
+                <li>
+                  <div class="node"><span class="lvl L4">L4</span>9.3.2 Kategorier</div>
+                </li>
+
+                <li>
+                  <div class="node"><span class="lvl L4">L4</span>9.3.3 Dato for hendelse (valgfritt)</div>
+                </li>
+
+                <li>
+                  <div class="node"><span class="lvl L4">L4</span>9.3.4 Beskrivelse</div>
+                </li>
+
+                <li>
+                  <div class="node"><span class="lvl L4">L4</span>9.3.5 Kontaktinfo (epost)</div>
+                </li>
+
+                <li>
+                  <div class="node"><span class="lvl L4">L4</span>9.3.6 Moderasjonsregler / retningslinjer</div>
+                </li>
+
+                <li>
+                  <div class="node"><span class="lvl L4">L4</span>9.3.7 Innsending (submit/cancel)</div>
+                </li>
+
+              </ul>
+            </li>
+
             </li>
           </ul>
         </div>
@@ -481,10 +1876,18 @@
         <div class="card">
           <div class="title"><span>10. Analyse og Rapport</span><small class="lvl L1">L1</small></div>
           <ul class="branch">
-            <li><div class="node"><span class="lvl L2">L2</span>10.1 Dashbord (admin)</div></li>
-            <li><div class="node"><span class="lvl L2">L2</span>10.2 Arbeidsgiverinnsikt</div></li>
-            <li><div class="node"><span class="lvl L2">L2</span>10.3 Studentinnsikt</div></li>
-            <li><div class="node"><span class="lvl L2">L2</span>10.4 Eksport (CSV/PDF/lenke)</div></li>
+            <li>
+              <div class="node"><span class="lvl L2">L2</span>10.1 Dashbord (admin)</div>
+            </li>
+            <li>
+              <div class="node"><span class="lvl L2">L2</span>10.2 Arbeidsgiverinnsikt</div>
+            </li>
+            <li>
+              <div class="node"><span class="lvl L2">L2</span>10.3 Studentinnsikt</div>
+            </li>
+            <li>
+              <div class="node"><span class="lvl L2">L2</span>10.4 Eksport (CSV/PDF/lenke)</div>
+            </li>
           </ul>
         </div>
       </div>
@@ -495,31 +1898,47 @@
           <div class="title"><span>11. Compliance og Risiko</span><small class="lvl L1">L1</small></div>
           <ul class="branch">
             <li>
-              <div class="node"><span class="lvl L2">L2</span>11.1 Personvern (GDPR)</div>
+              <div class="node"><span class="lvl L2">L2</span>11.1 Privacy Compliance / GDPR</div>
               <ul class="branch">
-                <li><div class="node"><span class="lvl L3">L3</span>11.1.1 Samtykkestyring</div></li>
-                <li><div class="node"><span class="lvl L3">L3</span>11.1.2 Innsyn/portabilitet</div></li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>11.1.1 Samtykkestyring</div>
+                </li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>11.1.2 Innsyn/portabilitet</div>
+                </li>
               </ul>
             </li>
             <li>
               <div class="node"><span class="lvl L2">L2</span>11.2 Arbeidsrett/hvitt arbeid</div>
               <ul class="branch">
-                <li><div class="node"><span class="lvl L3">L3</span>11.2.1 Standardvilkår</div></li>
-                <li><div class="node"><span class="lvl L3">L3</span>11.2.2 Info om lønn/avgifter</div></li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>11.2.1 Standardvilkår</div>
+                </li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>11.2.2 Info om lønn/avgifter</div>
+                </li>
               </ul>
             </li>
             <li>
               <div class="node"><span class="lvl L2">L2</span>11.3 Revisjonsspor</div>
               <ul class="branch">
-                <li><div class="node"><span class="lvl L3">L3</span>11.3.1 Hendelseslogg</div></li>
-                <li><div class="node"><span class="lvl L3">L3</span>11.3.2 Endringslogg</div></li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>11.3.1 Hendelseslogg</div>
+                </li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>11.3.2 Endringslogg</div>
+                </li>
               </ul>
             </li>
             <li>
               <div class="node"><span class="lvl L2">L2</span>11.4 Databehandleravtaler</div>
               <ul class="branch">
-                <li><div class="node"><span class="lvl L3">L3</span>11.4.1 Leverandøroversikt</div></li>
-                <li><div class="node"><span class="lvl L3">L3</span>11.4.2 DPA‑arkiv</div></li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>11.4.1 Leverandøroversikt</div>
+                </li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>11.4.2 DPA‑arkiv</div>
+                </li>
               </ul>
             </li>
           </ul>
@@ -534,31 +1953,51 @@
             <li>
               <div class="node"><span class="lvl L2">L2</span>12.1 Infrastruktur</div>
               <ul class="branch">
-                <li><div class="node"><span class="lvl L3">L3</span>12.1.1 Sky‑miljø (prod/test)</div></li>
-                <li><div class="node"><span class="lvl L3">L3</span>12.1.2 CI/CD‑pipeline</div></li>
-                <li><div class="node"><span class="lvl L3">L3</span>12.1.3 Hemmeligheter/keys</div></li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>12.1.1 Sky‑miljø (prod/test)</div>
+                </li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>12.1.2 CI/CD‑pipeline</div>
+                </li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>12.1.3 Hemmeligheter/keys</div>
+                </li>
               </ul>
             </li>
             <li>
               <div class="node"><span class="lvl L2">L2</span>12.2 Ytelse og Skalerbarhet</div>
               <ul class="branch">
-                <li><div class="node"><span class="lvl L3">L3</span>12.2.1 CDN/cache</div></li>
-                <li><div class="node"><span class="lvl L3">L3</span>12.2.2 Belastnings‑monitorering</div></li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>12.2.1 CDN/cache</div>
+                </li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>12.2.2 Belastnings‑monitorering</div>
+                </li>
               </ul>
             </li>
             <li>
               <div class="node"><span class="lvl L2">L2</span>12.3 Sikkerhet</div>
               <ul class="branch">
-                <li><div class="node"><span class="lvl L3">L3</span>12.3.1 TLS/HTTPS</div></li>
-                <li><div class="node"><span class="lvl L3">L3</span>12.3.2 Kryptering i ro</div></li>
-                <li><div class="node"><span class="lvl L3">L3</span>12.3.3 IAM‑policyer</div></li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>12.3.1 TLS/HTTPS</div>
+                </li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>12.3.2 Kryptering i ro</div>
+                </li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>12.3.3 IAM‑policyer</div>
+                </li>
               </ul>
             </li>
             <li>
               <div class="node"><span class="lvl L2">L2</span>12.4 Beredskap</div>
               <ul class="branch">
-                <li><div class="node"><span class="lvl L3">L3</span>12.4.1 Backup/restore‑plan</div></li>
-                <li><div class="node"><span class="lvl L3">L3</span>12.4.2 Hendelseshåndtering</div></li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>12.4.1 Backup/restore‑plan</div>
+                </li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>12.4.2 Hendelseshåndtering</div>
+                </li>
               </ul>
             </li>
           </ul>
@@ -573,22 +2012,34 @@
             <li>
               <div class="node"><span class="lvl L2">L2</span>13.1 Designsystem</div>
               <ul class="branch">
-                <li><div class="node"><span class="lvl L3">L3</span>13.1.1 Farger/typografi/komponenter</div></li>
-                <li><div class="node"><span class="lvl L3">L3</span>13.1.2 Ikonografi/illustrasjoner</div></li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>13.1.1 Farger/typografi/komponenter</div>
+                </li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>13.1.2 Ikonografi/illustrasjoner</div>
+                </li>
               </ul>
             </li>
             <li>
               <div class="node"><span class="lvl L2">L2</span>13.2 Prototyper og Wireframes</div>
               <ul class="branch">
-                <li><div class="node"><span class="lvl L3">L3</span>13.2.1 Studentflyt</div></li>
-                <li><div class="node"><span class="lvl L3">L3</span>13.2.2 Arbeidsgiverflyt</div></li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>13.2.1 Studentflyt</div>
+                </li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>13.2.2 Arbeidsgiverflyt</div>
+                </li>
               </ul>
             </li>
             <li>
               <div class="node"><span class="lvl L2">L2</span>13.3 Tilgjengelighet</div>
               <ul class="branch">
-                <li><div class="node"><span class="lvl L3">L3</span>13.3.1 WCAG AA</div></li>
-                <li><div class="node"><span class="lvl L3">L3</span>13.3.2 Kontrast/lesbarhet</div></li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>13.3.1 WCAG AA</div>
+                </li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>13.3.2 Kontrast/lesbarhet</div>
+                </li>
               </ul>
             </li>
           </ul>
@@ -603,16 +2054,26 @@
             <li>
               <div class="node"><span class="lvl L2">L2</span>14.1 Hjelpeartikler</div>
               <ul class="branch">
-                <li><div class="node"><span class="lvl L3">L3</span>14.1.1 Studentguide</div></li>
-                <li><div class="node"><span class="lvl L3">L3</span>14.1.2 Arbeidsgiverguide</div></li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>14.1.1 Studentguide</div>
+                </li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>14.1.2 Arbeidsgiverguide</div>
+                </li>
               </ul>
             </li>
             <li>
               <div class="node"><span class="lvl L2">L2</span>14.2 Policy‑dokumenter</div>
               <ul class="branch">
-                <li><div class="node"><span class="lvl L3">L3</span>14.2.1 Personvern</div></li>
-                <li><div class="node"><span class="lvl L3">L3</span>14.2.2 Bruksvilkår</div></li>
-                <li><div class="node"><span class="lvl L3">L3</span>14.2.3 Rating‑regler</div></li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>14.2.1 Personvern</div>
+                </li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>14.2.2 Bruksvilkår</div>
+                </li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>14.2.3 Rating‑regler</div>
+                </li>
               </ul>
             </li>
           </ul>
@@ -627,16 +2088,26 @@
             <li>
               <div class="node"><span class="lvl L2">L2</span>15.1 Brukerstøtte</div>
               <ul class="branch">
-                <li><div class="node"><span class="lvl L3">L3</span>15.1.1 FAQ</div></li>
-                <li><div class="node"><span class="lvl L3">L3</span>15.1.2 Kontaktskjema</div></li>
-                <li><div class="node"><span class="lvl L3">L3</span>15.1.3 Live‑chat</div></li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>15.1.1 FAQ</div>
+                </li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>15.1.2 Kontaktskjema</div>
+                </li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>15.1.3 Live‑chat</div>
+                </li>
               </ul>
             </li>
             <li>
               <div class="node"><span class="lvl L2">L2</span>15.2 Overvåkning</div>
               <ul class="branch">
-                <li><div class="node"><span class="lvl L3">L3</span>15.2.1 Oppetidsmonitor</div></li>
-                <li><div class="node"><span class="lvl L3">L3</span>15.2.2 Varslinger (drift)</div></li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>15.2.1 Oppetidsmonitor</div>
+                </li>
+                <li>
+                  <div class="node"><span class="lvl L3">L3</span>15.2.2 Varslinger (drift)</div>
+                </li>
               </ul>
             </li>
           </ul>
@@ -646,4 +2117,5 @@
     </div>
   </div>
 </body>
+
 </html>
